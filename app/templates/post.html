@@ -1,0 +1,21 @@
+{% extends "banner.html" %}
+{% block secondcss %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/post.css') }}" type="text/css" />
+{% endblock %}
+{% block second %}
+<div>
+    <div class="post-title">
+        <h3>{{post.title}}</h3>
+    </div>
+    {% if post.subtitle %}
+    <div class="post-subtitle">
+        <h4>{{post.subtitle}}</h4>
+    </div>
+    {% endif %}
+    <div class="post-content">
+        <p>
+            {{post.content | safe}}
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+
+
+    <!--Import materialize.css-->
+    <link href="https://cdn.staticfile.org/material-design-icons/3.0.1/iconfont/material-icons.min.css"
+        rel="stylesheet">
+    <link href=" https://cdn.staticfile.org/fullcalendar/4.0.0-alpha.4/fullcalendar.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" type="text/css" />
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+    <div class="nav-container">
+        <nav class="m-tabContainer transparent">
+
+            <div class="nav-wrapper">
+
+
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul class="left hide-on-med-and-down">
+                    <li> <a href="#!" class="brand-logo navbar-brand">
+                            <img alt="Brand" class="brandImg" src="{{ url_for('static',filename='img/logo.png') }}">
+                        </a></li>
+
+                    <li {% if isHome%} class="active" {% endif %}><a
+                            href="{{ url_for('web.index',lang='cn') }}">{{ translation.shouye }}</a></li>
+                    {% for s in stages %}
+
+                    <li {% if s.link == route %} class="active" {% endif %}><a
+                            href="{{ url_for('web.second',lang='cn',route=s.link) }}">{{ translation[s.name]}}</a>
+                    </li>
+                    {% endfor %}
+
+
+                    <li>
+                        <form class="nav-search-form">
+                            <div class="input-field">
+                                <input id="search" type="search" required>
+                                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                                <i class="material-icons">close</i>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+
+        </nav>
+    </div>
+
+    <ul class="sidenav" id="mobile-demo">
+        <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
+                <li>
+                    <a class="collapsible-header"
+                        href="{{ url_for('web.index',lang='cn') }}">{{ translation.shouye }}</a>
+                </li>
+            </ul>
+        </li>
+        {% for s in stages %}
+        <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
+                <li>
+                    <a class="collapsible-header"
+                        href="{{ url_for('web.second',lang='cn',route=s.link) }}">{{ translation[s.name]}}</a>
+                </li>
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+    {% block content %}{% endblock %}
+    <footer class="page-footer grey lighten-3">
+        <div class="footer-copyright">
+            <div class="container" style="text-align: center">
+                {{footer.content}}
+            </div>
+        </div>
+    </footer>
+
+    {% block modal %}
+
+    {% endblock %}
+    <!--Import jQuery before materialize.js-->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+
+    <script src="https://cdn.staticfile.org/fullcalendar/4.0.0-alpha.4/fullcalendar.js"></script>
+
+    <script src="https://cdn.staticfile.org/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block script %}{% endblock %}
+</body>
+
+</html>

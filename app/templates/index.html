@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}" type="text/css" />
+<title>锢维智能</title>
+{% endblock %}
+{% block content %}
+<div>
+    <div class="carousel carousel-slider">
+
+        {% for c in carousel %}
+        <div class="carousel-item">
+            <img src="{{c.img}}">
+            <div class="carousel-text-container">
+                <h2>{{c.title}}</h2>
+                <p class="white-text">{{c.content}}</p>
+                <a class="btn waves-effect">{{c.linktitle}}</a>
+            </div>
+
+        </div>
+
+        {% endfor %}
+    </div>
+    <div class="card-container">
+
+        {% for p in posts %}
+
+        {%if  loop.first %}
+        <div class="row">
+            {% endif %}
+
+
+
+
+            {% if loop.index0%3==0 and not loop.first and not loop.last   %}
+        </div>
+        <div class="row">
+            {% endif %}
+            <div class="col s12 m12 l4">
+                <div class="row">
+                    <div class="col s12 card-owner">
+                        <div class="card Large ">
+                            <a href="{{ url_for('web.second',lang='cn',route=p.link) }}">
+                                <div class="card-image">
+                                    <img src="{{p.img}}">
+
+                                </div>
+                                <div class="card-content">
+                                    <h3 class="card-title">{{p.title}}</h3>
+                                    <p>{{p.content}}</p>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {%if loop.last %}
+        </div>
+        {% endif %}
+
+        {% endfor %}
+    </div>
+    <div class="home-pair-container">
+        <div class="home-pair-text-container">
+            <p>你的材料能锻造吗？</p>
+            <p>简单的经验法则是：如果你能锻造它，你就能摩擦焊接它</p>
+            <h4 class="home-pair-title">检查以发现可能性</h4>
+            <div class="row">
+                <div class="col s5">
+                    <select>
+                        <option value="" disabled selected></option>
+                        <option value="1">Option 1</option>
+                        <option value="2">Option 2</option>
+                        <option value="3">Option 3</option>
+                    </select>
+                </div>
+                <div class="col s5">
+                    <select>
+                        <option value="" disabled selected></option>
+                        <option value="1">Option 1</option>
+                        <option value="2">Option 2</option>
+                        <option value="3">Option 3</option>
+                    </select>
+
+                </div>
+                <div class="col s2">
+                    <a class="waves-effect waves-light btn">检查</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="jumbotron m-carousel">
+    {% if carousel.media  %}
+    {{ carousel.media |safe }}
+    {% else  %}
+
+    {% endif %}
+    <h1 class=".browser-default">{{ carousel.title }}</h1>
+    <p class=".browser-default">{{ carousel.content }}</p>
+    <p class=".browser-default"><a class="btn btn-primary btn-lg .browser-default" href="#" role="button">Learn
+            more</a></p>
+
+</div> -->
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="https://cdn.staticfile.org/pagePiling.js/1.5.5/jquery.pagepiling.min.js"></script>
+{% endblock %}
+{#<video autoplay>#}
+{#    <source src="{{ url_for('static',filename='video/6-r4QcdJVxM.mp4') }}" type="video/mp4">#}
+{#    Your browser does not support the video tag.#}
+{#</video>#}

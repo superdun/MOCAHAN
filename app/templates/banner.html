@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/banner.css') }}" type="text/css" />
+{% block secondcss %}{% endblock %}
+<title>锢维智能</title>
+{% endblock %}
+{% block content %}
+<div>
+    <div class="banner">
+        <img src="{{ url_for('static',filename=firststage.banner) }}" />
+    </div>
+    <div class="row second-content">
+        <div class="col s12 m10 l8 offset-m1 offset-l2">
+            {% block second %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,38 @@
+{% extends "banner.html" %}
+{% block second %}
+{% for p in posts %}
+{%if  loop.first %}
+<div class="row">
+    {% endif %}
+
+
+
+
+    {% if loop.index0%2==0 and not loop.first and not loop.last   %}
+</div>
+<div class="row">
+    {% endif %}
+    <div class="col s12 m6 l6">
+        <div class="row">
+            <div class="col s12 card-owner">
+                <div class="card Large ">
+                    <a href="{{ url_for('web.post',lang='cn',route = route,id=p.id) }}">
+                        <div class="card-image">
+                            <img src="{{p.img}}">
+
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">{{p.title}}</h3>
+                            <p>{{p.content |truncate(90,true,'...') }}</p>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {%if loop.last %}
+</div>
+{% endif %}
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,197 @@
+.nav-container {
+    height: 64px;
+}
+
+.navbar-brand {
+    width: 240px;
+    height: auto;
+    margin-right: 50px;
+    position: relative !important;
+}
+
+.nav-search-form {
+    height: 64px;
+}
+
+.carousel-text-container {
+    position: fixed;
+    top: 30%;
+    left: 20%;
+    text-align: center;
+}
+
+.carousel-text-container h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: rgb(247, 142, 33);
+}
+
+.carousel-text-container p {
+    color: white;
+}
+
+.carousel-text-container a {
+    background-color: rgb(247, 142, 33);
+    color: white;
+}
+
+.card-title {
+    margin-top: 10px;
+}
+
+.card-container {
+    margin: 50px;
+}
+
+
+/* pair */
+.home-pair-container {
+    background-color: #89b4df;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    padding: 80px;
+}
+
+.home-pair-text-container {
+    color: white;
+    text-align: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.home-pair-text-container .btn {
+    background-color: white;
+    color: #89b4df;
+}
+
+
+.home-pair-text-container input {
+
+    border: 2px solid #fff !important;
+}
+
+.home-pair-text-container p {
+    font-size: 20px;
+}
+
+nav .input-field label i {
+    color: rgb(247, 142, 33) !important;
+}
+
+.input-field #search {
+    border-style: solid;
+    border-color: #eddcd5;
+    border-width: 1px;
+}
+
+nav .input-field {
+    padding: 15px !important;
+
+}
+
+nav .hide-on-med-and-down {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    float: none !important;
+}
+
+.brandImg {
+    height: auto;
+    width: auto;
+    max-width: 100%;
+    display: inline-block;
+    padding-top: 6px;
+    padding-left: 20px;
+}
+
+.m-tabContainer {
+    padding-left: 10px;
+    padding-right: 15px;
+
+}
+
+.sidenav-trigger {
+    margin: 0;
+}
+
+
+
+.dropdown-content li>a,
+.dropdown-content li>span {
+    color: black;
+    font-size: 0.8vh;
+}
+
+
+nav ul {
+    color: black;
+    font-size: 1.3vh;
+}
+
+nav ul a {
+    color: inherit;
+}
+
+nav ul li.active {
+    background-color: white;
+    color: rgb(247, 142, 33);
+}
+
+nav ul a:hover {
+    background-color: white;
+    color: rgb(247, 142, 33);
+}
+
+.m-carousel {
+    overflow: hidden;
+    max-height: 380px;
+    min-height: 250px;
+    padding: 0;
+    position: relative;
+    text-align: center;
+    background-position: top center;
+    clear: both;
+}
+
+.video-background {
+    opacity: .3;
+    position: absolute;
+    max-height: none;
+    max-width: none;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 1;
+    background-size: cover;
+    left: 0;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.page-footer .footer-copyright {
+    color: #333;
+}
+
+.card {
+    box-shadow: none;
+
+}
+
+.card a {
+    color: black;
+}
+
+.card-owner {
+    padding: 0 .55rem !important;
