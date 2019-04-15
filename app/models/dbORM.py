@@ -158,9 +158,16 @@ class User(db.Model):
 
 class Feedback(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    detail = db.Column(db.String(8000))
     created_at = db.Column(db.DateTime, default=datetime.now())
-    openid = db.Column(db.String(80), db.ForeignKey('customer.openid'))
+    name = db.Column(db.String(80))
+    company_name = db.Column(db.String(80))
+    position = db.Column(db.String(80))
+    address = db.Column(db.String(80))
+    phone = db.Column(db.String(80))
+    email = db.Column(db.String(80))
+    target = db.Column(db.String(80))
+    contact = db.Column(db.String(80))
+    comment = db.Column(db.String(800))
 
     def __repr__(self):
         return self.id
