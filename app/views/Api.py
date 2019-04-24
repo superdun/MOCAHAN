@@ -12,7 +12,7 @@ import json
 api = Blueprint('api', __name__)
 
 
-@web.route('/feedback', methods=['POST'])
+@api.route('/feedback', methods=['POST'])
 def post():
     name = request.form['name']
     company_name = request.form['company_name']

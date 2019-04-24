@@ -83,9 +83,13 @@ class Firststage(db.Model):
     status = db.Column(db.String(200))
     banner = db.Column(db.String(200))
     posts = db.relationship('Post', backref='Firststage', lazy='dynamic')
+    humanname = db.Column(db.String(200))
 
     def __repr__(self):
-        return self.title
+        if self.humanname:
+            return str(self.id)+"--"+self.humanname.encode('utf8').decode('utf8')
+        else:
+            return str(self.id)
 
 
 class Secondstage(db.Model):
@@ -101,7 +105,7 @@ class Secondstage(db.Model):
     posts = db.relationship('Post', backref='Secondstage', lazy='dynamic')
 
     def __repr__(self):
-        return self.title
+        return str(self.id)
 
 
 class Thirdstage(db.Model):
@@ -112,18 +116,19 @@ class Thirdstage(db.Model):
     subid = db.Column(db.Integer)
     img = db.Column(db.String(200))
     content = db.Column(db.Text)
-    link = db.Column(db.String(200))
     status = db.Column(db.String(200))
     posts = db.relationship('Post', backref='Thirdstage', lazy='dynamic')
 
     def __repr__(self):
-        return self.title
+        return str(self.id)
 
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.now())
     title = db.Column(db.String(80))
+    description = db.Column(db.String(2000))
+    cover = db.Column(db.String(200))
     img = db.Column(db.String(200))
     content = db.Column(db.String(60000))
     tagoneid = db.Column(db.Integer, db.ForeignKey('firststage.id'))
@@ -154,6 +159,20 @@ class User(db.Model):
 
     def __repr__(self):
         return self.name
+
+
+class Calender(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(80))
+    content = db.Column(db.String(80))
+    color = db.Column(db.String(80))
+    start = db.Column(db.DateTime)
+    end = db.Column(db.DateTime)
+    startstr = db.Column(db.String(80))
+    endstr = db.Column(db.String(80))
+
+    def __repr__(self):
+        return self.title
 
 
 class Feedback(db.Model):

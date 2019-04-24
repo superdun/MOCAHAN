@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 import hashlib
-from flask import current_app, render_template, request, redirect, url_for,Blueprint
+from flask import current_app, render_template, request, redirect, url_for, Blueprint
 import flask_login
 from ..models.dbORM import User as U
-from app import db,login_manager
-login_bp = Blueprint('login',__name__)
+from app import db, login_manager
+login_bp = Blueprint('login', __name__)
 
 
 def getusers():
@@ -16,8 +16,11 @@ def getusers():
                             'id': user.id}
     return users
 
+
 class User(flask_login.UserMixin):
     pass
+
+
 @login_bp.route('/login', methods=['GET', 'POST'])
 def login():
     users = getusers()
@@ -47,7 +50,7 @@ def login():
 @login_bp.route('/protected')
 @flask_login.login_required
 def protected():
-    return redirect('/')
+    return redirect('admin')
 
 
 @login_bp.route('/logout')

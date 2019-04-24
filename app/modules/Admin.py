@@ -36,10 +36,16 @@ def img_url_format(value):
 
 
 def dashboard():
-    admin = Admin(current_app, name=u'摩擦焊后台管理')
-    admin.add_view(UserView(User, db.session, name=u"管理员管理"))
-    admin.add_view(TagView(Tag, db.session, name=u"标签"))
+    admin = Admin(current_app, name=u'锢维后台管理')
+    #admin.add_view(UserView(User, db.session, name=u"管理员管理"))
+    #admin.add_view(TagView(Tag, db.session, name=u"标签"))
     admin.add_view(PostView(Post, db.session, name=u"文章"))
+    admin.add_view(FirststageView(Firststage, db.session, name=u"一级菜单"))
+    admin.add_view(CarouselView(Carousel, db.session, name=u"轮播图"))
+    admin.add_view(FooterView(Footer, db.session, name=u"页脚"))
+    admin.add_view(FeedbackView(Feedback, db.session, name=u"联系我们"))
+    admin.add_view(CalenderView(Calender, db.session, name=u"实验日历"))
+    admin.add_view(TranslationView(Translation, db.session, name=u"多语言"))
 
 
 class UploadWidget(form.ImageUploadInput):
@@ -86,7 +92,6 @@ class AdminModel(ModelView):
 # super admin models
 
 
-
 class UserView(AdminModel):
 
     def on_model_change(self, form, model, is_created):
@@ -101,25 +106,85 @@ class TagView(AdminModel):
 
 
 class CustomerView(AdminModel):
-    form_extra_fields={
+    form_extra_fields = {
         'img': ImageUpload(u'头像', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
                            url_relative_path=getQiniuDomain()),
 
     }
 
+
 class AttitudeView(AdminModel):
     pass
 
 
-
 class PostView(AdminModel):
-    form_excluded_columns = ('customers','agreecount','disagreecount')
-    column_labels = dict(created_at=u'创建时间', day=u'发布日期', title=u'标题', detail=u'详情'
-    ,agreecount=u'点赞数',disagreecount=u'反对数', comment=u'编辑评论', Customer=u'点赞用户', Tag=u"标签",img=u"图片", mendhistories=u'维修历史')
+    column_exclude_list = (
+        'content', 'img', 'Secondstage', 'Thirdstage', 'cover')
+    form_excluded_columns = ('Secondstage', 'Thirdstage')
+    # column_labels = dict(created_at=u'创建时间', day=u'发布日期', title=u'标题', detail=u'详情', agreecount=u'点赞数',
+    #                      disagreecount=u'反对数', comment=u'编辑评论', Customer=u'点赞用户', Tag=u"标签", img=u"图片", mendhistories=u'维修历史')
+
     @property
     def form_extra_fields(self):
         return {
             'img': ImageUpload(u'图片', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
                                url_relative_path=getQiniuDomain()),
-            'status': SelectField(u'状态', choices=(("delete", u"已删除"), ("publish", u"发布"),))
+            'cover': ImageUpload(u'封面', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
+                                 url_relative_path=getQiniuDomain()),
+            'status': SelectField(u'状态', choices=(("deleted", u"已删除"), ("published", u"发布"),))
         }
+
+
+class FirststageView(AdminModel):
+    column_exclude_list = ('title', 'subtitle', 'subid', 'img', 'content','banner')
+    form_excluded_columns = ('Title', 'Subtitle', 'Subid', 'Img', 'Content')
+    @property
+    def form_extra_fields(self):
+        return {
+            'banner': ImageUpload(u'图片', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
+                                  url_relative_path=getQiniuDomain()),
+            'status': SelectField(u'状态', choices=(("deleted", u"已删除"), ("published", u"发布"),))
+        }
+
+
+class CarouselView(AdminModel):
+    column_exclude_list = ('media',)
+    # form_excluded_columns = ('Title', 'Subtitle', 'Subid', 'Img', 'Content')
+    @property
+    def form_extra_fields(self):
+        return {
+            'img': ImageUpload(u'图片', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
+                               url_relative_path=getQiniuDomain()),
+            'status': SelectField(u'状态', choices=(("deleted", u"已删除"), ("published", u"发布"),))
+        }
+
+
+class FooterView(AdminModel):
+    # column_exclude_list = ('title', 'subtitle', 'subid', 'img', 'content')
+    # form_excluded_columns = ('Title', 'Subtitle', 'Subid', 'Img', 'Content')
+    column_editable_list = ('content',)
+    @property
+    def form_extra_fields(self):
+        return {
+            'img': ImageUpload(u'图片', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
+                               url_relative_path=getQiniuDomain()),
+            'status': SelectField(u'状态', choices=(("deleted", u"已删除"), ("published", u"发布"),))
+        }
+
+
+class FeedbackView(AdminModel):
+    # column_exclude_list = ('title', 'subtitle', 'subid', 'img', 'content')
+    # form_excluded_columns = ('Title', 'Subtitle', 'Subid', 'Img', 'Content')
+    pass
+
+
+class CalenderView(AdminModel):
+    column_exclude_list = ('startstr', 'endstr')
+    form_excluded_columns = ('startstr', 'endstr')
+    pass
+
+
+class TranslationView(AdminModel):
+    column_editable_list = ('name', 'cn', 'en')
+    # column_exclude_list = ('title', 'subtitle', 'subid', 'img', 'content')
+    # form_excluded_columns = ('Title', 'Subtitle', 'Subid', 'Img', 'Content')
