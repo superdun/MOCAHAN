@@ -1,0 +1,9 @@
+<!-- Step 4 -->
+{% extends 'admin/model/edit.html' %}
+
+{% block tail %}
+    {{ super() }}
+    
+    {{ ckeditor.load(custom_url="https://cdn.bootcss.com/ckeditor/4.9.2/ckeditor.js") }}
+    {{ ckeditor.config(name="content",custom_config="removeButtons:'Image'") }}
+{% endblock %}

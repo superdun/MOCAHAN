@@ -74,7 +74,7 @@
             $('#submmit').click(function () {
                 var formDataIntegral = new FormData();
                 formDataIntegral.append("name", $('#name').val());
-                formDataIntegral.append("company_name", $('#nacompany_nameme').val());
+                formDataIntegral.append("company_name", $('#company_name').val());
                 formDataIntegral.append("position", $('#position').val());
                 formDataIntegral.append("address", $('#address').val());
                 formDataIntegral.append("phone", $('#phone').val());
@@ -92,9 +92,9 @@
                     async: false,
                     success: function (data) {
                         if (data["status"] == "ok") {
-
-                        } {
-
+                            alert("反馈成功，我们会尽快联系您");
+                        } else{
+                            alert("反馈失败，请稍后再试");
                         }
 
                     }

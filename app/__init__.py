@@ -5,10 +5,11 @@ from flask_admin import Admin
 import flask_login
 import flask_restless
 import datetime
-
+from flask_ckeditor import CKEditor, CKEditorField, upload_fail, upload_success
 db = SQLAlchemy()
 admin = Admin()
 login_manager = flask_login.LoginManager()
+manager = flask_restless.APIManager(flask_sqlalchemy_db=db)
 
 
 def create_app():
@@ -18,7 +19,7 @@ def create_app():
 
     db.init_app(app)
     db.app = app
-
+    ckeditor = CKEditor(app)
     login_manager.init_app(app)
 
     from models.dbORM import User as Us
@@ -37,7 +38,7 @@ def create_app():
 
     @login_manager.unauthorized_handler
     def unauthorized_handler():
-        
+
         return render_template("login.html")
 
     @login_manager.user_loader
@@ -79,7 +80,7 @@ def create_app():
     app.register_blueprint(Api.api, url_prefix='/api')
     app.register_blueprint(Login.login_bp, url_prefix='')
     app.register_blueprint(Web.web, url_prefix='')
-    manager = flask_restless.APIManager(app, flask_sqlalchemy_db=db)
+    manager.init_app(app)
 
     # 附加路由和自定义的错误页面
     with app.app_context():

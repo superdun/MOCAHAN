@@ -9,7 +9,7 @@
 
         {% for c in carousel %}
         <div class="carousel-item">
-            <img src="{{c.img}}">
+            <img src="{{url_for('static',filename=c.img) }}">
             <div class="carousel-text-container">
                 <h2>{{c.title}}</h2>
                 <p class="white-text">{{c.content}}</p>
@@ -30,12 +30,13 @@
                         <div class="card Large ">
                             <a href="{{ url_for('web.second',lang='cn',route=posts[0].link) }}">
                                 <div class="card-image">
-                                    <img src="{{posts[0].img}}">
+                                    <img src="{{url_for('static',filename=posts[0].img) }}">
 
                                 </div>
                                 <div class="card-content">
                                     <h3 class="card-title">{{posts[0].title}}</h3>
-                                    <p>{{posts[0].content}}</p>
+                                    <!-- <p>{{posts[0].content|safe |truncate(90,true,'...') }}</p> -->
+                                    <p>{{posts[0].subtitle}}</p>
                                 </div>
                             </a>
 
@@ -49,12 +50,13 @@
                         <div class="card Large ">
                             <a href="{{ url_for('web.second',lang='cn',route=posts[1].link) }}">
                                 <div class="card-image">
-                                    <img src="{{posts[1].img}}">
+                                    <img src="{{url_for('static',filename=posts[1].img) }}">
 
                                 </div>
                                 <div class="card-content">
                                     <h3 class="card-title">{{posts[1].title}}</h3>
-                                    <p>{{posts[1].content}}</p>
+                                    <!-- <p>{{posts[1].content|safe |truncate(90,true,'...') }}</p> -->
+                                    <p>{{posts[0].subtitle}}</p>
                                 </div>
                             </a>
 
@@ -130,33 +132,36 @@
 {% block script %}
 <script type="text/javascript" src="https://cdn.staticfile.org/pagePiling.js/1.5.5/jquery.pagepiling.min.js"></script>
 <script>
-    $(document).ready(
-        function () {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                plugins: [],
-                events: [{
-                        id: 'a',
-                        title: 'my event1',
-                        start: '2019-04-01',
-                        end: '2019-04-04',
-                        allDay:true
-                    },
-                    {
-                        id: 'b',
-                        title: 'my event2',
-                        start: '2019-04-03',
-                        end: '2019-04-06',
-                        backgroundColor:'rgb(247, 142, 33)'
-                    },
-                    
-
-                ],
-               
-            });
-            calendar.render();
+    var renderCalender = function (data) {
+        var events = [];
+        for(var i=0;i<data.length;i++){
+            events.push(
+                {
+                    id: i,
+                    title: data[i].title,
+                    start: data[i].start,
+                    end: data[i].end,
+                    allDay: true
+                }
+            )
         }
-
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: [],
+            events: events,
+        });
+        calendar.render();
+    }
+    $(document).ready(
+        $.ajax({
+            url: "/api/calender",
+            success:function(result){
+                renderCalender(result["objects"])
+            },
+            error:function(e){
+                console.log(e);
+            }
+        })
     );
 </script>
 {% endblock %}

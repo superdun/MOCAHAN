@@ -18,12 +18,13 @@
                 <div class="card Large ">
                     <a href="{{ url_for('web.post',lang='cn',route = route,id=p.id) }}">
                         <div class="card-image">
-                            <img src="{{p.img}}">
+                            <img src="{{url_for('static',filename=p.img) }}">
 
                         </div>
                         <div class="card-content">
                             <h3 class="card-title">{{p.title}}</h3>
-                            <p>{{p.content |truncate(90,true,'...') }}</p>
+                            <!-- <p>{{p.content|safe |truncate(90,true,'...') }}</p> -->
+                            <p>{{p.subtitle}}</p>
                         </div>
                     </a>
 

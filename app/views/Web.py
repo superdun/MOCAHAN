@@ -4,6 +4,7 @@ from flask import current_app, render_template, request, redirect, url_for, Blue
 import flask_login
 from ..models.dbORM import Carousel, Translation, Tag, Post, Footer, Firststage
 from app import db, login_manager
+from sqlalchemy import or_
 web = Blueprint('web', __name__)
 
 
@@ -55,3 +56,38 @@ def post(lang, route, id):
     if not post:
         return abort(404)
     return render_template("post.html",  translation=translations, footer=footer, stages=stages, firststage=firststage, post=post, route=route, isHome=False)
+
+
+@web.route('/<lang>/search')
+def Search(lang):
+    stages = Firststage.query.filter_by(status="published").all()
+    # TODO public banner
+    firststage = Firststage.query.filter_by(
+        status="published").filter_by(link="about").first()
+    footer = Footer.query.first()
+    translations = getTranslations(lang)
+    q = request.args.get('q')
+    if not q:
+        posts = Post.query.filter_by(
+            status="published").all()
+    else:
+        posts = Post.query.filter_by(
+            status="published").filter(or_(Post.content.like('%'+q+'%'), Post.title.like('%'+q+'%'))).all()
+    if not post:
+        return abort(404)
+    return render_template("searchResults.html",  translation=translations, footer=footer, stages=stages, firststage=firststage, posts=posts,  isHome=False)
+
+
+@web.route('/<lang>/posts/<id>')
+def postDetail(lang, id):
+    stages = Firststage.query.filter_by(status="published").all()
+    # TODO public banner
+    firststage = Firststage.query.filter_by(
+        status="published").filter_by(link="about").first()
+    footer = Footer.query.first()
+    translations = getTranslations(lang)
+    post = Post.query.filter_by(
+        status="published").filter_by(id=id).first()
+    if not post:
+        return abort(404)
+    return render_template("post.html",  translation=translations, footer=footer, stages=stages, firststage=firststage, post=post,  isHome=False)

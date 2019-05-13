@@ -17,6 +17,7 @@ from wtforms import SelectField, PasswordField
 from flask_admin import BaseView, expose
 import hashlib
 from app import db
+from flask_ckeditor import CKEditor, CKEditorField
 
 
 def getQiniuDomain():
@@ -32,7 +33,7 @@ def date_format(value):
 
 
 def img_url_format(value):
-    return Markup("<img src='%s'>" % ("http://" + getQiniuDomain() + value))
+    return Markup("<img src='%s'>" % (url_for('static', filename=value)))
 
 
 def dashboard():
@@ -56,7 +57,8 @@ class UploadWidget(form.ImageUploadInput):
             filename = field.data
 
         if field.url_relative_path:
-            filename = "http://" + field.url_relative_path + filename
+            # filename = "http://" + field.url_relative_path + filename
+            filename = field.url_relative_path + filename
         return filename
 
 
@@ -70,13 +72,14 @@ class ImageUpload(form.ImageUploadField):
 
         data.seek(0)
         data.save(path)
-        qiniu_store = Qiniu(current_app)
-        with open(path, 'rb') as fp:
-            ret, info = qiniu_store.save(fp, filename)
-            if 200 != info.status_code:
-                raise Exception("upload to qiniu failed", ret)
-            # shutil.rmtree(os.path.dirname(path))
-            return filename
+        return filename
+        # qiniu_store = Qiniu(current_app)
+        # with open(path, 'rb') as fp:
+        #     ret, info = qiniu_store.save(fp, filename)
+        #     if 200 != info.status_code:
+        #         raise Exception("upload to qiniu failed", ret)
+        #     # shutil.rmtree(os.path.dirname(path))
+        #     return filename
 
 
 class AdminModel(ModelView):
@@ -108,7 +111,7 @@ class TagView(AdminModel):
 class CustomerView(AdminModel):
     form_extra_fields = {
         'img': ImageUpload(u'头像', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
-                           url_relative_path=getQiniuDomain()),
+                           url_relative_path="/static/"),
 
     }
 
@@ -123,26 +126,29 @@ class PostView(AdminModel):
     form_excluded_columns = ('Secondstage', 'Thirdstage')
     # column_labels = dict(created_at=u'创建时间', day=u'发布日期', title=u'标题', detail=u'详情', agreecount=u'点赞数',
     #                      disagreecount=u'反对数', comment=u'编辑评论', Customer=u'点赞用户', Tag=u"标签", img=u"图片", mendhistories=u'维修历史')
-
+    form_overrides = dict(content=CKEditorField)
+    create_template = 'edit.html'
+    edit_template = 'edit.html'
     @property
     def form_extra_fields(self):
         return {
             'img': ImageUpload(u'图片', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
-                               url_relative_path=getQiniuDomain()),
+                               url_relative_path="/static/"),
             'cover': ImageUpload(u'封面', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
-                                 url_relative_path=getQiniuDomain()),
+                                 url_relative_path="/static/"),
             'status': SelectField(u'状态', choices=(("deleted", u"已删除"), ("published", u"发布"),))
         }
 
 
 class FirststageView(AdminModel):
-    column_exclude_list = ('title', 'subtitle', 'subid', 'img', 'content','banner')
+    column_exclude_list = ('title', 'subtitle', 'subid',
+                           'img', 'content', 'banner')
     form_excluded_columns = ('Title', 'Subtitle', 'Subid', 'Img', 'Content')
     @property
     def form_extra_fields(self):
         return {
             'banner': ImageUpload(u'图片', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
-                                  url_relative_path=getQiniuDomain()),
+                                  url_relative_path="/static/"),
             'status': SelectField(u'状态', choices=(("deleted", u"已删除"), ("published", u"发布"),))
         }
 
@@ -154,7 +160,7 @@ class CarouselView(AdminModel):
     def form_extra_fields(self):
         return {
             'img': ImageUpload(u'图片', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
-                               url_relative_path=getQiniuDomain()),
+                               url_relative_path="/static/"),
             'status': SelectField(u'状态', choices=(("deleted", u"已删除"), ("published", u"发布"),))
         }
 
@@ -167,7 +173,7 @@ class FooterView(AdminModel):
     def form_extra_fields(self):
         return {
             'img': ImageUpload(u'图片', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
-                               url_relative_path=getQiniuDomain()),
+                               url_relative_path="/static/"),
             'status': SelectField(u'状态', choices=(("deleted", u"已删除"), ("published", u"发布"),))
         }
 
@@ -179,9 +185,13 @@ class FeedbackView(AdminModel):
 
 
 class CalenderView(AdminModel):
-    column_exclude_list = ('startstr', 'endstr')
-    form_excluded_columns = ('startstr', 'endstr')
-    pass
+    column_exclude_list = ('startstr', 'endstr', "color")
+    form_excluded_columns = ('startstr', 'endstr', "color")
+    @property
+    def form_extra_fields(self):
+        return {
+            'status': SelectField(u'状态', choices=(("deleted", u"已删除"), ("published", u"发布"),))
+        }
 
 
 class TranslationView(AdminModel):

@@ -7,10 +7,22 @@ from ..modules.Wechat import *
 from datetime import datetime
 from ..helpers.session3rd import *
 from ..modules.Cache import *
-from app import db
+from app import db,manager
 import json
+import flask_restless
 api = Blueprint('api', __name__)
 
+def preprocessor(search_params=None, **kw):
+    if search_params is None:
+        return
+    filt = dict(name='status', op='eq', val="published")
+    # Check if there are any filters there already.
+    if 'filters' not in search_params:
+        search_params['filters'] = []
+    # *Append* your filter to the list of filters.
+    search_params['filters'].append(filt)
+
+manager.create_api(Calender, preprocessors=dict(GET_MANY=[preprocessor]),url_prefix='/api')
 
 @api.route('/feedback', methods=['POST'])
 def post():
@@ -31,3 +43,10 @@ def post():
     db.session.add(fb)
     db.session.commit()
     return jsonify({"status": "ok"})
+
+
+@api.route('/calenders', methods=['GET'])
+def CalendersAPI():
+    calenders = Calender.query.filter_by(status="published").all()
+    return jsonify(result=calenders)
+

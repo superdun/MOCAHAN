@@ -170,7 +170,7 @@ class Calender(db.Model):
     end = db.Column(db.DateTime)
     startstr = db.Column(db.String(80))
     endstr = db.Column(db.String(80))
-
+    status = db.Column(db.String(200), default="published")
     def __repr__(self):
         return self.title
 

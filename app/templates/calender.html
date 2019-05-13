@@ -3,38 +3,43 @@
 <link rel="stylesheet" href="{{ url_for('static',filename='css/calender.css') }}" type="text/css" />
 {% endblock %}
 {% block second %}
-<div class="head-container"><h4>实验日历</h4></div>
+<div class="head-container">
+    <h4>实验日历</h4>
+</div>
 <div id='calendar'></div>
 {% endblock %}
 {% block script %}
 <script>
-    $(document).ready(
-        function () {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                plugins: [],
-                events: [{
-                        id: 'a',
-                        title: 'my event1',
-                        start: '2019-04-01',
-                        end: '2019-04-04',
-                        allDay:true
-                    },
-                    {
-                        id: 'b',
-                        title: 'my event2',
-                        start: '2019-04-03',
-                        end: '2019-04-06',
-                        backgroundColor:'rgb(247, 142, 33)'
-                    },
-                    
-
-                ],
-               
-            });
-            calendar.render();
+    var renderCalender = function (data) {
+        var events = [];
+        for(var i=0;i<data.length;i++){
+            events.push(
+                {
+                    id: i,
+                    title: data[i].title,
+                    start: data[i].start,
+                    end: data[i].end,
+                    allDay: true
+                }
+            )
         }
-
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: [],
+            events: events,
+        });
+        calendar.render();
+    }
+    $(document).ready(
+        $.ajax({
+            url: "/api/calender",
+            success:function(result){
+                renderCalender(result["objects"])
+            },
+            error:function(e){
+                console.log(e);
+            }
+        })
     );
 </script>
 {% endblock %}

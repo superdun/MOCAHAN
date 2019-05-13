@@ -81,9 +81,9 @@ nav .input-field label i {
 }
 
 .input-field #search {
-    border-style: solid;
-    border-color: #eddcd5;
-    border-width: 1px;
+    border-style: solid!important;
+    border-color: #eddcd5!important;
+    border-width: 1px!important;
 }
 
 nav .input-field {
@@ -195,3 +195,9 @@ main {
 
 .card-owner {
     padding: 0 .55rem !important;
+
+}
+
+.sidenav-trigger{
+color: rgb(247, 142, 33);
+}
