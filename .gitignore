@@ -1,6 +1,6 @@
 # Specifies intentionally untracked files to ignore when using Git
 # http://git-scm.com/docs/gitignore
-app/static/upload/*
+app/static/upload/
 *.MP4
 *~
 *.sw[mnpcod]
@@ -37,3 +37,4 @@ UserInterfaceState.xcuserstate
 *.pyc
 instance/*
 instance/
+/app/static/upload
