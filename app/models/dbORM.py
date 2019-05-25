@@ -1,7 +1,9 @@
 # -*- coding:utf-8 -*-
 from datetime import datetime
 from app import db
+from sqlalchemy.ext.declarative import declarative_base
 
+Base = declarative_base()
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -171,6 +173,7 @@ class Calender(db.Model):
     startstr = db.Column(db.String(80))
     endstr = db.Column(db.String(80))
     status = db.Column(db.String(200), default="published")
+
     def __repr__(self):
         return self.title
 
@@ -190,3 +193,33 @@ class Feedback(db.Model):
 
     def __repr__(self):
         return self.id
+
+class Pair(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    paironeid = db.Column(db.Integer, db.ForeignKey('materialone.id'))
+    pairtwoid = db.Column(db.Integer, db.ForeignKey('materialone.id'))
+
+    def __repr__(self):
+        return self.paironeid
+
+Pairtable = db.Table(
+    'pair', Base.metadata,
+    db.Column('paironeid', db.Integer, db.ForeignKey('material.id')),
+    db.Column('pairtwoid', db.Integer, db.ForeignKey('material.id'))
+    )
+
+class Material(Base):
+    __tablename__ = "material"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80))
+    materials = db.relationship(
+        'Material', secondary=Pairtable,
+        primaryjoin=Pairtable.c.paironeid == id,
+        secondaryjoin=Pairtable.c.pairtwoid == id,
+        backref="material")
+
+    def __repr__(self):
+        return self.name
+
+
+

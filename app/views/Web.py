@@ -2,7 +2,7 @@
 import hashlib
 from flask import current_app, render_template, request, redirect, url_for, Blueprint, abort
 import flask_login
-from ..models.dbORM import Carousel, Translation, Tag, Post, Footer, Firststage
+from ..models.dbORM import Carousel, Translation, Tag, Post, Footer, Firststage, Material
 from app import db, login_manager
 from sqlalchemy import or_
 web = Blueprint('web', __name__)
@@ -24,13 +24,13 @@ def getTranslations(lang):
 def index(lang):
     carousel = Carousel.query.filter_by(status="published").all()
     translations = getTranslations(lang)
-
+    materials = db.session.query(Material).all()
     stages = Firststage.query.filter_by(status="published").all()
     posts = Post.query.filter_by(
         status="published").filter_by(tagoneid=1).all()
     footer = Footer.query.first()
     active = "home"
-    return render_template("index.html", carousel=carousel, translation=translations, posts=posts, footer=footer, stages=stages, isHome=True)
+    return render_template("index.html", carousel=carousel, translation=translations, posts=posts, footer=footer, stages=stages, isHome=True, materials=materials)
 
 
 @web.route('/<lang>/<route>')

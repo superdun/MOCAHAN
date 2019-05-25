@@ -90,26 +90,27 @@
             <p>你的材料能锻造吗？</p>
             <p>简单的经验法则是：如果你能锻造它，你就能摩擦焊接它</p>
             <h4 class="home-pair-title">检查以发现可能性</h4>
+            <p id="result"></p>
             <div class="row">
                 <div class="col s5">
-                    <select>
+                    <select id="m1">
                         <option value="" disabled selected></option>
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
+                        {% for m in materials %}
+                        <option value="{{ m.id }}">{{m.name}}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="col s5">
-                    <select>
+                    <select id="m2">
                         <option value="" disabled selected></option>
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
+                        {% for m in materials %}
+                        <option value="{{ m.id }}">{{m.name}}</option>
+                        {% endfor %}
                     </select>
 
                 </div>
                 <div class="col s2">
-                    <a class="waves-effect waves-light btn">检查</a>
+                    <a class="waves-effect waves-light btn" id="pair">检查</a>
                 </div>
             </div>
         </div>
@@ -148,11 +149,46 @@
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             plugins: [],
-            events: events,
+            events: events
         });
         calendar.render();
-    }
+    };
+
+    var getPairResult = function() {
+       if(!$('#m1').val()||!$('#m2').val()){
+            alert("请先选择材料");
+            return;
+        }
+        var formDataIntegral = new FormData();
+        formDataIntegral.append("m1", $('#m1').val());
+        formDataIntegral.append("m2", $('#m2').val());
+        $.ajax({
+            url: "/api/pair",
+            type: 'POST',
+            data: formDataIntegral,
+            contentType: false,
+            processData: false,
+            async: false,
+            success:function(result){
+                console.log(result);
+                if(result["result"]){
+                    $("#result").text("是的，我们可以焊接它们")
+                }
+                else {
+                    $("#result").text("我们可能不能焊接他们，详情请联系我们")
+                }
+            },
+            error:function(e){
+                console.log(e);
+            }
+        })
+    };
+
     $(document).ready(
+        function() {
+                  $("#pair").click(function() {
+          getPairResult();
+        });
         $.ajax({
             url: "/api/calender",
             success:function(result){
@@ -162,6 +198,7 @@
                 console.log(e);
             }
         })
+        }
     );
 </script>
 {% endblock %}

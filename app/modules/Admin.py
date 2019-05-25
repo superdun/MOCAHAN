@@ -47,6 +47,7 @@ def dashboard():
     admin.add_view(FeedbackView(Feedback, db.session, name=u"联系我们"))
     admin.add_view(CalenderView(Calender, db.session, name=u"实验日历"))
     admin.add_view(TranslationView(Translation, db.session, name=u"多语言"))
+    admin.add_view(MaterialView(Material, db.session, name=u"材料"))
 
 
 class UploadWidget(form.ImageUploadInput):
@@ -198,3 +199,10 @@ class TranslationView(AdminModel):
     column_editable_list = ('name', 'cn', 'en')
     # column_exclude_list = ('title', 'subtitle', 'subid', 'img', 'content')
     # form_excluded_columns = ('Title', 'Subtitle', 'Subid', 'Img', 'Content')
+
+
+class MaterialView(AdminModel):
+    column_exclude_list = ('materials',)
+    form_excluded_columns = ('materials',)
+
+

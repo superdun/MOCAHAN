@@ -1,3 +1,10 @@
 .fc-toolbar{
     display: none;
 }
+.select-dropdown{
+    color: white;
+    font-size: 25px;
+}
+.select-dropdown>li>span{
+    font-size: 25px;
+}

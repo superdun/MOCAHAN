@@ -50,3 +50,18 @@ def CalendersAPI():
     calenders = Calender.query.filter_by(status="published").all()
     return jsonify(result=calenders)
 
+@api.route('/pair', methods=['POST'])
+def PairAPI():
+    result = False
+    m1 = request.form['m1']
+    m2 = request.form['m2']
+    if m1 and m2:
+        r1 = Pair.query.filter_by(paironeid=m1)\
+            .filter_by(pairtwoid=m2).first()
+        r2 = Pair.query.filter_by(paironeid=m2) \
+            .filter_by(pairtwoid=m1).first()
+
+        if r1 and r2:
+            result = True
+
+    return jsonify(result=result)
