@@ -47,7 +47,7 @@ def dashboard():
     admin.add_view(FeedbackView(Feedback, db.session, name=u"联系我们"))
     admin.add_view(CalenderView(Calender, db.session, name=u"实验日历"))
     admin.add_view(TranslationView(Translation, db.session, name=u"多语言"))
-    admin.add_view(MaterialView(Material, db.session, name=u"材料"))
+    admin.add_view(MaterialView(Material, db.session, name=u"焊接材料"))
 
 
 class UploadWidget(form.ImageUploadInput):
@@ -124,9 +124,9 @@ class AttitudeView(AdminModel):
 class PostView(AdminModel):
     column_exclude_list = (
         'content', 'img', 'Secondstage', 'Thirdstage', 'cover')
-    form_excluded_columns = ('Secondstage', 'Thirdstage')
-    # column_labels = dict(created_at=u'创建时间', day=u'发布日期', title=u'标题', detail=u'详情', agreecount=u'点赞数',
-    #                      disagreecount=u'反对数', comment=u'编辑评论', Customer=u'点赞用户', Tag=u"标签", img=u"图片", mendhistories=u'维修历史')
+    form_excluded_columns = ('Secondstage', 'Thirdstage', "link")
+    column_labels = dict(created_at=u'创建时间', title=u'标题', description=u'描述', content=u'内容', subtitle=u'副标题',
+                         Firststage=u'一级分类', status=u'状态', cover=u'封面', img=u"图片")
     form_overrides = dict(content=CKEditorField)
     create_template = 'edit.html'
     edit_template = 'edit.html'
@@ -144,7 +144,10 @@ class PostView(AdminModel):
 class FirststageView(AdminModel):
     column_exclude_list = ('title', 'subtitle', 'subid',
                            'img', 'content', 'banner')
-    form_excluded_columns = ('Title', 'Subtitle', 'Subid', 'Img', 'Content')
+    form_excluded_columns = ('Title', 'Subtitle', 'subid', 'img', 'content')
+    column_labels = dict(created_at=u'创建时间', title=u'标题', description=u'描述', name=u'名称', subtitle=u'副标题',
+                         link=u'链接', status=u'状态', humanname=u"中文名称", Posts=u"相关文章")
+
     @property
     def form_extra_fields(self):
         return {
@@ -155,8 +158,12 @@ class FirststageView(AdminModel):
 
 
 class CarouselView(AdminModel):
-    column_exclude_list = ('media',)
-    # form_excluded_columns = ('Title', 'Subtitle', 'Subid', 'Img', 'Content')
+    column_exclude_list = ('media','img')
+    form_excluded_columns = ('media',)
+
+    column_labels = dict(created_at=u'创建时间', title=u'标题', description=u'描述', name=u'名称', subtitle=u'副标题',
+                         link=u'链接', status=u'状态', humanname=u"中文名称", Posts=u"相关文章",linktitle=u'链接标题',content=u'内容')
+
     @property
     def form_extra_fields(self):
         return {
@@ -170,6 +177,8 @@ class FooterView(AdminModel):
     # column_exclude_list = ('title', 'subtitle', 'subid', 'img', 'content')
     # form_excluded_columns = ('Title', 'Subtitle', 'Subid', 'Img', 'Content')
     column_editable_list = ('content',)
+    column_labels = dict(content=u'内容')
+
     @property
     def form_extra_fields(self):
         return {
@@ -182,12 +191,17 @@ class FooterView(AdminModel):
 class FeedbackView(AdminModel):
     # column_exclude_list = ('title', 'subtitle', 'subid', 'img', 'content')
     # form_excluded_columns = ('Title', 'Subtitle', 'Subid', 'Img', 'Content')
+    column_labels = dict(created_at=u'创建时间', name=u'名称', company_name=u"公司名", position=u"位置",
+                         address=u"地址", phone=u"电话", target=u"意向", contact=u"联系方式", comment=u"其他")
     pass
 
 
 class CalenderView(AdminModel):
     column_exclude_list = ('startstr', 'endstr', "color")
     form_excluded_columns = ('startstr', 'endstr', "color")
+    column_labels = dict(content=u'内容', title=u'标题',
+                         start=u'起始时间', end=u'结束时间',status=u'状态')
+
     @property
     def form_extra_fields(self):
         return {
@@ -197,6 +211,8 @@ class CalenderView(AdminModel):
 
 class TranslationView(AdminModel):
     column_editable_list = ('name', 'cn', 'en')
+    column_labels = dict(name=u'内容', cn=u'中文',
+                         en=u'英文')
     # column_exclude_list = ('title', 'subtitle', 'subid', 'img', 'content')
     # form_excluded_columns = ('Title', 'Subtitle', 'Subid', 'Img', 'Content')
 
@@ -204,5 +220,4 @@ class TranslationView(AdminModel):
 class MaterialView(AdminModel):
     column_exclude_list = ('materials',)
     form_excluded_columns = ('materials',)
-
-
+    column_labels = dict(name=u'材料名称', material=u'可焊接材料')
