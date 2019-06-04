@@ -15,7 +15,9 @@
 
 .carousel-text-container {
     position: fixed;
+    _position:absolute;
     top: 30%;
+    _top:expression(eval(document.body.scrollTop));
     left: 20%;
     text-align: center;
 }

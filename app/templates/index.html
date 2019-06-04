@@ -10,7 +10,7 @@
         {% for c in carousel %}
         <div class="carousel-item">
             <img src="{{url_for('static',filename=c.img) }}">
-            <div class="carousel-text-container">
+            <div class="carousel-text-container ie-carousel-text-container">
                 <h2>{{c.title}}</h2>
                 <p class="white-text">{{c.content}}</p>
                 <a class="btn waves-effect">{{c.linktitle}}</a>
@@ -165,10 +165,12 @@
         $.ajax({
             url: "/api/pair",
             type: 'POST',
+            dataType: 'json',
             data: formDataIntegral,
             contentType: false,
             processData: false,
             async: false,
+            cache: false,
             success:function(result){
                 console.log(result);
                 if(result["result"]){
@@ -191,6 +193,7 @@
         });
         $.ajax({
             url: "/api/calender",
+            dataType: 'json',
             success:function(result){
                 renderCalender(result["objects"])
             },

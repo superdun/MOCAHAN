@@ -33,6 +33,7 @@
     $(document).ready(
         $.ajax({
             url: "/api/calender",
+            dataType: 'json',
             success:function(result){
                 renderCalender(result["objects"])
             },
