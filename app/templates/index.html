@@ -28,9 +28,18 @@
                 <div class="row">
                     <div class="col s12 card-owner">
                         <div class="card Large ">
-                            <a href="{{ url_for('web.second',lang='cn',route=posts[0].link) }}">
+                                {% if  posts[0].link %}
+                                <a href="{{ url_for('web.second',lang='cn',route=posts[0].link) }}">
+                                {%else%}
+                                <a href="#"></a>
+                                {% endif %}
                                 <div class="card-image">
+                                    {% if  posts[0].cover %}
+                                    <img src="{{url_for('static',filename=posts[0].cover) }}">
+                                    {%else%}
                                     <img src="{{url_for('static',filename=posts[0].img) }}">
+                                    {% endif %}
+
 
                                 </div>
                                 <div class="card-content">
@@ -48,9 +57,17 @@
                 <div class="row">
                     <div class="col s12 card-owner">
                         <div class="card Large ">
+                            {% if  posts[1].link %}
                             <a href="{{ url_for('web.second',lang='cn',route=posts[1].link) }}">
+                            {%else%}
+                            <a href="#"></a>
+                            {% endif %}
                                 <div class="card-image">
+                                    {% if  posts[1].cover %}
+                                    <img src="{{url_for('static',filename=posts[1].cover) }}">
+                                    {%else%}
                                     <img src="{{url_for('static',filename=posts[1].img) }}">
+                                    {% endif %}
 
                                 </div>
                                 <div class="card-content">
@@ -135,16 +152,14 @@
 <script>
     var renderCalender = function (data) {
         var events = [];
-        for(var i=0;i<data.length;i++){
-            events.push(
-                {
-                    id: i,
-                    title: data[i].title,
-                    start: data[i].start,
-                    end: data[i].end,
-                    allDay: true
-                }
-            )
+        for (var i = 0; i < data.length; i++) {
+            events.push({
+                id: i,
+                title: data[i].title,
+                start: data[i].start,
+                end: data[i].end,
+                allDay: true
+            })
         }
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -154,8 +169,8 @@
         calendar.render();
     };
 
-    var getPairResult = function() {
-       if(!$('#m1').val()||!$('#m2').val()){
+    var getPairResult = function () {
+        if (!$('#m1').val() || !$('#m2').val()) {
             alert("请先选择材料");
             return;
         }
@@ -171,36 +186,35 @@
             processData: false,
             async: false,
             cache: false,
-            success:function(result){
+            success: function (result) {
                 console.log(result);
-                if(result["result"]){
+                if (result["result"]) {
                     $("#result").text("是的，我们可以焊接它们")
-                }
-                else {
+                } else {
                     $("#result").text("我们可能不能焊接他们，详情请联系我们")
                 }
             },
-            error:function(e){
+            error: function (e) {
                 console.log(e);
             }
         })
     };
 
     $(document).ready(
-        function() {
-                  $("#pair").click(function() {
-          getPairResult();
-        });
-        $.ajax({
-            url: "/api/calender",
-            dataType: 'json',
-            success:function(result){
-                renderCalender(result["objects"])
-            },
-            error:function(e){
-                console.log(e);
-            }
-        })
+        function () {
+            $("#pair").click(function () {
+                getPairResult();
+            });
+            $.ajax({
+                url: "/api/calender",
+                dataType: 'json',
+                success: function (result) {
+                    renderCalender(result["objects"])
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            })
         }
     );
 </script>
