@@ -27,7 +27,7 @@ def index(lang):
     materials = db.session.query(Material).all()
     stages = Firststage.query.filter_by(status="published").all()
     posts = Post.query.filter_by(
-        status="published").filter_by(tagoneid=1).order_by(Post.id).all()
+        status="published").filter_by(tagoneid=1).order_by(Post.id.desc()).all()
     footer = Footer.query.first()
     active = "home"
     return render_template("index.html", carousel=carousel, translation=translations, posts=posts, footer=footer, stages=stages, isHome=True, materials=materials)
@@ -38,7 +38,7 @@ def second(lang, route):
     stages = Firststage.query.filter_by(status="published").all()
     firststage = Firststage.query.filter_by(
         status="published").filter_by(link=route).first()
-    posts = firststage.posts.filter_by(status="published").order_by(Post.id).all()
+    posts = firststage.posts.filter_by(status="published").order_by(Post.id.desc()).all()
     footer = Footer.query.first()
     translations = getTranslations(lang)
     return render_template(firststage.link+".html",  translation=translations, footer=footer, stages=stages, firststage=firststage, posts=posts, route=route, isHome=False)
@@ -52,7 +52,7 @@ def post(lang, route, id):
     footer = Footer.query.first()
     translations = getTranslations(lang)
     post = Post.query.filter_by(
-        status="published").filter_by(id=id).order_by(Post.id).first()
+        status="published").filter_by(id=id).order_by(Post.id.desc()).first()
     if not post:
         return abort(404)
     return render_template("post.html",  translation=translations, footer=footer, stages=stages, firststage=firststage, post=post, route=route, isHome=False)
@@ -87,7 +87,7 @@ def postDetail(lang, id):
     footer = Footer.query.first()
     translations = getTranslations(lang)
     post = Post.query.filter_by(
-        status="published").filter_by(id=id).order_by(Post.id).first()
+        status="published").filter_by(id=id).order_by(Post.id.desc()).first()
     if not post:
         return abort(404)
     return render_template("post.html",  translation=translations, footer=footer, stages=stages, firststage=firststage, post=post,  isHome=False)
