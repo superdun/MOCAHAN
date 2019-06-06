@@ -20,6 +20,8 @@ $(document).ready(
         $('#clean_search').click(function(e){
             $('#search').val("");
         })
+        var carouselHeight = document.querySelector("body > div:nth-child(3) > div.carousel.carousel-slider > div > img").height;
+        $(".carousel").css("height",carouselHeight+"px")
     }
 
 );
