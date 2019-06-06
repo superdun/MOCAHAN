@@ -1,16 +1,20 @@
 # -*- coding:utf-8 -*-
 import os
+import os.path as op
 import sys
 from flask import Blueprint, request, current_app, url_for, jsonify
 from ..models.dbORM import *
 from ..modules.Wechat import *
 from datetime import datetime
 from ..helpers.session3rd import *
+from ..helpers.thumb import relativePath
 from ..modules.Cache import *
-from app import db,manager
+from app import db, manager
 import json
 import flask_restless
+from flask_ckeditor import upload_fail, upload_success
 api = Blueprint('api', __name__)
+
 
 def preprocessor(search_params=None, **kw):
     if search_params is None:
@@ -22,7 +26,10 @@ def preprocessor(search_params=None, **kw):
     # *Append* your filter to the list of filters.
     search_params['filters'].append(filt)
 
-manager.create_api(Calender, preprocessors=dict(GET_MANY=[preprocessor]),url_prefix='/api')
+
+manager.create_api(Calender, preprocessors=dict(
+    GET_MANY=[preprocessor]), url_prefix='/api')
+
 
 @api.route('/feedback', methods=['POST'])
 def post():
@@ -50,6 +57,7 @@ def CalendersAPI():
     calenders = Calender.query.filter_by(status="published").all()
     return jsonify(result=calenders)
 
+
 @api.route('/pair', methods=['POST'])
 def PairAPI():
     result = False
@@ -65,3 +73,18 @@ def PairAPI():
             result = True
 
     return jsonify(result=result)
+
+
+@api.route('/upload', methods=['POST'])
+def Upload():
+    f = request.files.get('upload')
+    extension = f.filename.split('.')[1].lower()
+    if extension not in ['jpg', 'gif', 'png', 'jpeg']:
+        return upload_fail(message='Image only!')
+    randomFn =  relativePath()+f.filename
+    fn = current_app.config.get("UPLOAD_URL")+"/"+randomFn
+    if not op.exists(op.dirname(fn)):
+        os.makedirs(os.path.dirname(fn), 0o777)
+    f.save(fn)
+    url = url_for('static', filename=randomFn)
+    return upload_success(url=url)

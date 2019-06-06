@@ -18,6 +18,7 @@
     _position:absolute;
     top: 30%;
     _top:expression(eval(document.body.scrollTop));
+    
     left: 20%;
     text-align: center;
 }
