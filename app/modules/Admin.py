@@ -125,6 +125,7 @@ class PostView(AdminModel):
     column_exclude_list = (
         'content', 'img', 'Secondstage', 'Thirdstage', 'cover')
     form_excluded_columns = ('Secondstage', 'Thirdstage')
+    form_columns = ('created_at', 'title', 'description', 'subtitle', 'Firststage', 'status', 'cover', 'img', 'content')
     column_labels = dict(created_at=u'创建时间', title=u'标题', description=u'描述', content=u'内容', subtitle=u'副标题',
                          Firststage=u'一级分类', status=u'状态', cover=u'封面', img=u"图片")
     form_overrides = dict(content=CKEditorField)
