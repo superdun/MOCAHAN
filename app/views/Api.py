@@ -13,6 +13,7 @@ from app import db, manager
 import json
 import flask_restless
 from flask_ckeditor import upload_fail, upload_success
+from ..helpers.thumb import routate
 api = Blueprint('api', __name__)
 
 
@@ -78,13 +79,14 @@ def PairAPI():
 @api.route('/upload', methods=['POST'])
 def Upload():
     f = request.files.get('upload')
+    newF, exif = routate(f)
     extension = f.filename.split('.')[1].lower()
     if extension not in ['jpg', 'gif', 'png', 'jpeg']:
         return upload_fail(message='Image only!')
-    randomFn =  relativePath()+f.filename
+    randomFn = relativePath()+f.filename
     fn = current_app.config.get("UPLOAD_URL")+"/"+randomFn
     if not op.exists(op.dirname(fn)):
         os.makedirs(os.path.dirname(fn), 0o777)
-    f.save(fn)
+    newF.save(fn)
     url = url_for('static', filename=randomFn)
     return upload_success(url=url)

@@ -18,6 +18,7 @@ from flask_admin import BaseView, expose
 import hashlib
 from app import db
 from flask_ckeditor import CKEditor, CKEditorField
+from ..helpers.thumb import routate
 
 
 def getQiniuDomain():
@@ -70,9 +71,9 @@ class ImageUpload(form.ImageUploadField):
         path = self._get_path(filename)
         if not op.exists(op.dirname(path)):
             os.makedirs(os.path.dirname(path), self.permission | 0o111)
-
-        data.seek(0)
-        data.save(path)
+        newF, exif = routate(data)
+        newF.seek(0)
+        newF.save(path)
         return filename
         # qiniu_store = Qiniu(current_app)
         # with open(path, 'rb') as fp:
@@ -125,7 +126,8 @@ class PostView(AdminModel):
     column_exclude_list = (
         'content', 'img', 'Secondstage', 'Thirdstage', 'cover')
     form_excluded_columns = ('Secondstage', 'Thirdstage')
-    form_columns = ('created_at', 'title', 'description', 'subtitle', 'Firststage', 'status', 'cover', 'img', 'content')
+    form_columns = ('created_at', 'title', 'description', 'subtitle',
+                    'Firststage', 'status', 'cover', 'img', 'content')
     column_labels = dict(created_at=u'创建时间', title=u'标题', description=u'描述', content=u'内容', subtitle=u'副标题',
                          Firststage=u'一级分类', status=u'状态', cover=u'封面', img=u"图片")
     form_overrides = dict(content=CKEditorField)
@@ -159,11 +161,11 @@ class FirststageView(AdminModel):
 
 
 class CarouselView(AdminModel):
-    column_exclude_list = ('media','img')
+    column_exclude_list = ('media', 'img')
     form_excluded_columns = ('media',)
 
     column_labels = dict(created_at=u'创建时间', title=u'标题', description=u'描述', name=u'名称', subtitle=u'副标题',
-                         link=u'链接', status=u'状态', humanname=u"中文名称", Posts=u"相关文章",linktitle=u'链接标题',content=u'内容')
+                         link=u'链接', status=u'状态', humanname=u"中文名称", Posts=u"相关文章", linktitle=u'链接标题', content=u'内容')
 
     @property
     def form_extra_fields(self):
@@ -201,7 +203,7 @@ class CalenderView(AdminModel):
     column_exclude_list = ('startstr', 'endstr', "color")
     form_excluded_columns = ('startstr', 'endstr', "color")
     column_labels = dict(content=u'内容', title=u'标题',
-                         start=u'起始时间', end=u'结束时间',status=u'状态')
+                         start=u'起始时间', end=u'结束时间', status=u'状态')
 
     @property
     def form_extra_fields(self):
