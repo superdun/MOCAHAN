@@ -67,6 +67,8 @@
 .home-pair-text-container .btn {
     background-color: white;
     color: #89b4df;
+    padding: 0 3px;
+    width: 60px;
 }
 
 
@@ -76,7 +78,7 @@
 }
 
 .home-pair-text-container p {
-    font-size: 20px;
+    font-size: 30px;
 }
 
 nav .input-field label i {

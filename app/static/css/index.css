@@ -4,7 +4,12 @@
 .select-dropdown{
     color: white;
     font-size: 25px;
+    height: 36px!important;
 }
 .select-dropdown>li>span{
     font-size: 25px;
 }
+.home-pair-text-container .row{
+    width: 450px;
+}
+
