@@ -129,7 +129,7 @@ class PostView(AdminModel):
     form_columns = ('created_at', 'title', 'description', 'subtitle',
                     'Firststage', 'status', 'cover', "link", 'content')
     column_labels = dict(created_at=u'创建时间', title=u'标题', description=u'描述', content=u'内容', subtitle=u'副标题',
-                         Firststage=u'一级分类', status=u'状态', cover=u'封面', img=u"图片")
+                         Firststage=u'一级分类', status=u'状态', cover=u'封面', img=u"图片", link=u"链接（首页）")
     form_overrides = dict(content=CKEditorField)
     create_template = 'edit.html'
     edit_template = 'edit.html'
