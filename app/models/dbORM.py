@@ -141,7 +141,9 @@ class Post(db.Model):
     subtitle = db.Column(db.String(200))
 
     def __repr__(self):
-        return self.title
+        if(self.title):
+            return self.title
+        return self.id
 
 
 class Tag(db.Model):
