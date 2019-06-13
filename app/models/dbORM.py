@@ -5,6 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
+
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.now())
@@ -196,6 +197,7 @@ class Feedback(db.Model):
     def __repr__(self):
         return self.id
 
+
 class Pair(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     paironeid = db.Column(db.Integer, db.ForeignKey('materialone.id'))
@@ -204,11 +206,13 @@ class Pair(db.Model):
     def __repr__(self):
         return self.paironeid
 
+
 Pairtable = db.Table(
     'pair', Base.metadata,
     db.Column('paironeid', db.Integer, db.ForeignKey('material.id')),
     db.Column('pairtwoid', db.Integer, db.ForeignKey('material.id'))
-    )
+)
+
 
 class Material(Base):
     __tablename__ = "material"
@@ -222,6 +226,3 @@ class Material(Base):
 
     def __repr__(self):
         return self.name
-
-
-
