@@ -3,25 +3,53 @@
 <link rel="stylesheet" href="{{ url_for('static',filename='css/calender.css') }}" type="text/css" />
 {% endblock %}
 {% block second %}
-<div class="head-container">
-    <h4>实验日历</h4>
+
+<div class="row">
+    <div class="col s12 m3 l4">
+        {% for p in posts %}
+        <div class="col s12 card-owner">
+            <div class="card Large ">
+                <a href="{{ url_for('web.post',lang='cn',route = route,id=p.id) }}">
+                    <div class="card-image">
+                        {% if  p.cover %}
+                        <img src="{{url_for('static',filename=p.cover) }}">
+                        {%else%}
+                        <img src="{{url_for('static',filename=p.img) }}">
+                        {% endif %}
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">{{p.title}}</h3>
+                        <!-- <p>{{p.content|safe |truncate(90,true,'...') }}</p> -->
+                        <p>{{p.description}}</p>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col s12 m9 l8">
+        <div class="head-container">
+            <h4>实验日历</h4>
+        </div>
+        <div id='calendar'></div>
+    </div>
+
 </div>
-<div id='calendar'></div>
+
 {% endblock %}
 {% block script %}
 <script>
     var renderCalender = function (data) {
         var events = [];
-        for(var i=0;i<data.length;i++){
-            events.push(
-                {
-                    id: i,
-                    title: data[i].title,
-                    start: data[i].start,
-                    end: data[i].end,
-                    allDay: true
-                }
-            )
+        for (var i = 0; i < data.length; i++) {
+            events.push({
+                id: i,
+                title: data[i].title,
+                start: data[i].start,
+                end: data[i].end,
+                allDay: true
+            })
         }
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -34,10 +62,10 @@
         $.ajax({
             url: "/api/calender",
             dataType: 'json',
-            success:function(result){
+            success: function (result) {
                 renderCalender(result["objects"])
             },
-            error:function(e){
+            error: function (e) {
                 console.log(e);
             }
         })

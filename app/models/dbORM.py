@@ -144,7 +144,7 @@ class Post(db.Model):
     def __repr__(self):
         if(self.title):
             return self.title
-        return str(self.id)
+        return str(self.id) 
 
 
 class Tag(db.Model):
