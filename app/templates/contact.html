@@ -9,11 +9,6 @@
         <div class="post-title">
             <h3>{{posts[0].title}}</h3>
         </div>
-        {% if posts[0].subtitle %}
-        <div class="post-subtitle">
-            <h4>{{posts[0].subtitle}}</h4>
-        </div>
-        {% endif %}
         <div class="post-content">
             <p>
                 {{posts[0].content | safe}}

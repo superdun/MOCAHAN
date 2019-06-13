@@ -1,7 +1,7 @@
 .fc-toolbar{
     display: none;
 }
-.select-dropdown{
+.dropdown-trigger{
     color: white;
     font-size: 25px;
     height: 36px!important;
