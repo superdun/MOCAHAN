@@ -9,6 +9,7 @@ from datetime import datetime
 from ..helpers.session3rd import *
 from ..helpers.thumb import relativePath
 from ..modules.Cache import *
+from ..modules.email import SendSync
 from app import db, manager
 import json
 import flask_restless
@@ -50,6 +51,9 @@ def post():
                   contact=contact, comment=comment)
     db.session.add(fb)
     db.session.commit()
+    msg = u"【锢维官网新消息】%s,%s,%s,%s,%s" % (
+        name, company_name, phone, email, comment)
+    SendSync(msg)
     return jsonify({"status": "ok"})
 
 

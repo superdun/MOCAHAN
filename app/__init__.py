@@ -6,17 +6,20 @@ import flask_login
 import flask_restless
 import datetime
 from flask_ckeditor import CKEditor, CKEditorField, upload_fail, upload_success
+from flask_mail import Mail
+
 db = SQLAlchemy()
+
 admin = Admin()
 login_manager = flask_login.LoginManager()
 manager = flask_restless.APIManager(flask_sqlalchemy_db=db)
-
+mail = Mail()
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object('config')
     app.config.from_pyfile('localConfig.py')
-
+    mail.init_app(app)
     db.init_app(app)
     db.app = app
     ckeditor = CKEditor(app)
