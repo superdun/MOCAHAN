@@ -32,6 +32,7 @@ def create_app():
     @app.route('/sitemap.xml')
     @app.route('/sitemap.html')
     @app.route('/baidu_verify_dmic8XkyMB.html')
+    @app.route('/BingSiteAuth.xml')
     def static_from_root():
         return send_from_directory(app.static_folder+"/file", request.path[1:])
 
