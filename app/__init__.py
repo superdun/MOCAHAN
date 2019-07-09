@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 import flask_login
@@ -15,6 +15,7 @@ login_manager = flask_login.LoginManager()
 manager = flask_restless.APIManager(flask_sqlalchemy_db=db)
 mail = Mail()
 
+
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object('config')
@@ -26,6 +27,12 @@ def create_app():
     login_manager.init_app(app)
 
     from models.dbORM import User as Us
+
+    @app.route('/robots.txt')
+    @app.route('/sitemap.xml')
+    @app.route('/sitemap.html')
+    def static_from_root():
+        return send_from_directory(app.static_folder+"\\file", request.path[1:])
 
     def getusers():
         users = {}

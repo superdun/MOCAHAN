@@ -20,6 +20,8 @@ def getTranslations(lang):
     return translations
 
 
+
+
 @web.route('/')
 def home():
     return redirect(url_for("web.index", lang="cn"))
