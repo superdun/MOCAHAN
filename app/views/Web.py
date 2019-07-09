@@ -20,6 +20,11 @@ def getTranslations(lang):
     return translations
 
 
+@web.route('/')
+def home():
+    return redirect(url_for("web.index", lang="cn"))
+
+
 @web.route('/<lang>')
 def index(lang):
     carousel = Carousel.query.filter_by(status="published").all()
@@ -38,7 +43,8 @@ def second(lang, route):
     stages = Firststage.query.filter_by(status="published").all()
     firststage = Firststage.query.filter_by(
         status="published").filter_by(link=route).first()
-    posts = firststage.posts.filter_by(status="published").order_by(Post.id.desc()).all()
+    posts = firststage.posts.filter_by(
+        status="published").order_by(Post.id.desc()).all()
     footer = Footer.query.first()
     translations = getTranslations(lang)
     return render_template(firststage.link+".html",  translation=translations, footer=footer, stages=stages, firststage=firststage, posts=posts, route=route, isHome=False)

@@ -73,7 +73,7 @@ def PairAPI():
             .filter_by(pairtwoid=m2).first()
         r2 = Pair.query.filter_by(paironeid=m2) \
             .filter_by(pairtwoid=m1).first()
-
+    
         if r1 and r2:
             result = True
 
