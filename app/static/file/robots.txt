@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: 
 Sitemap: http://www.good-welding.cn/sitemap.xml
+Sitemap: http://www.good-welding.cn/sitemap.html

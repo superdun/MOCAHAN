@@ -32,7 +32,7 @@ def create_app():
     @app.route('/sitemap.xml')
     @app.route('/sitemap.html')
     def static_from_root():
-        return send_from_directory(app.static_folder+"\\file", request.path[1:])
+        return send_from_directory(app.static_folder+"/file", request.path[1:])
 
     def getusers():
         users = {}
