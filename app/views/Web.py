@@ -61,9 +61,11 @@ def post(lang, route, id):
     translations = getTranslations(lang)
     post = Post.query.filter_by(
         status="published").filter_by(id=id).order_by(Post.id.desc()).first()
+    relativePosts = firststage.posts.filter_by(
+        status="published").order_by(Post.id.desc()).limit(5).all()
     if not post:
         return abort(404)
-    return render_template("post.html",  translation=translations, footer=footer, stages=stages, firststage=firststage, post=post, route=route, isHome=False)
+    return render_template("post.html",  translation=translations, footer=footer, stages=stages, firststage=firststage, post=post, route=route, isHome=False,relativePosts=relativePosts)
 
 
 @web.route('/<lang>/search')
@@ -90,12 +92,15 @@ def Search(lang):
 def postDetail(lang, id):
     stages = Firststage.query.filter_by(status="published").all()
     # TODO public banner
-    firststage = Firststage.query.filter_by(
-        status="published").filter_by(link="about").first()
+
     footer = Footer.query.first()
     translations = getTranslations(lang)
     post = Post.query.filter_by(
         status="published").filter_by(id=id).order_by(Post.id.desc()).first()
+    firststage = post.Firststage.filter_by(
+        status="published").filter_by(link="about").first()
+    relativePosts = firststage.posts.filter_by(
+        status="published").order_by(Post.id.desc()).limit(5).all()
     if not post:
         return abort(404)
-    return render_template("post.html",  translation=translations, footer=footer, stages=stages, firststage=firststage, post=post,  isHome=False)
+    return render_template("post.html",  translation=translations, footer=footer, stages=stages, firststage=firststage, post=post,  isHome=False,relativePosts=relativePosts)

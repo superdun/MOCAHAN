@@ -18,4 +18,25 @@
         </p>
     </div>
 </div>
+<div class="relative">
+    <div class="relative_title row">
+        <div class="col s6">相关文章</div>
+        <div class="col s6 r"><a href="{{ url_for('web.second',lang='cn',route=route) }}">返回上级</a></div>
+    </div>
+    <div class="relative_contents">
+        <ul>
+            {% for rp in relativePosts %}
+            <li>
+                <span class="content_icon"></span>
+                <span>
+                        <a class="relative_content" href="{{ url_for('web.post',lang='cn',id=rp.id,route=route) }}">{{rp.title}}</a>
+                </span>
+
+            </li>
+
+            {% endfor %}
+        </ul>
+
+    </div>
+</div>
 {% endblock %}

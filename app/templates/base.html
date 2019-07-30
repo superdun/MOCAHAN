@@ -15,7 +15,7 @@
     <link href="https://cdn.staticfile.org/material-design-icons/3.0.1/iconfont/material-icons.min.css"
         rel="stylesheet">
     <link href=" https://cdn.staticfile.org/fullcalendar/4.0.0-alpha.4/fullcalendar.css" rel="stylesheet">
-    <link href="https://cdn.staticfile.org/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/materialize/1.0.0/css/materialize.css" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" type="text/css" />
     {% block css %}{% endblock %}
@@ -28,8 +28,8 @@
             <div class="nav-wrapper">
 
 
-                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                <ul class="left hide-on-med-and-down">
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger hide-on-med-only"><i class="material-icons">menu</i></a>
+                <ul class="left hide-on-small-only">
                     <li> <a href="#!" class="brand-logo navbar-brand">
                             <img alt="Brand" class="brandImg" src="{{ url_for('static',filename='img/logo.png') }}">
                         </a></li>

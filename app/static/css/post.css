@@ -81,3 +81,24 @@
 .post-content strong{
     font-weight: bold;
 }
+
+.relative_title .r{
+    text-align: right
+}
+.relative_contents{
+    background-color: #f4fbfe;
+    padding: 10px;
+}
+.relative_title {
+    margin-bottom: 10px;
+}
+.content_icon{
+    overflow: hidden;
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #1672a5;
+    margin-right: 19px;
+    vertical-align: 3px
+}

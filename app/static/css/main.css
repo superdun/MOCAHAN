@@ -11,7 +11,7 @@
 
 .nav-search-form {
     height: 64px;
-    width: 20rem;
+    width: 10rem;
 }
 
 .carousel-text-container {
@@ -97,7 +97,7 @@ nav .input-field {
 
 }
 
-nav .hide-on-med-and-down {
+nav .hide-on-small-only {
     width: fit-content;
     margin-left: auto;
     margin-right: auto;

@@ -2,11 +2,19 @@
  * Created by lidad on 2018/10/9.
  */
 function onResize() {
+    if($("body").width() < 900){
+        $(".brand-logo").css("display", "none");
+    }else{
+        $(".brand-logo").css("display", "block");
+    }
     switch (true) {
+        
         case $("body").width() >= 1200:
+            
             $(".brand-logo").css("margin-right", ($("body").width() - 1200) + "px");
             break;
         case $("body").width() < 1200:
+
             $(".brand-logo").css("margin-right", "10px");
             break;
         default:
