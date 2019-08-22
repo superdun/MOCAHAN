@@ -16,10 +16,10 @@
 
 .carousel-text-container {
     position: fixed;
-    _position:absolute;
+    _position: absolute;
     top: 30%;
-    _top:expression(eval(document.body.scrollTop));
-    
+    _top: expression(eval(document.body.scrollTop));
+
     left: 20%;
     text-align: center;
 }
@@ -87,9 +87,9 @@ nav .input-field label i {
 }
 
 .input-field #search {
-    border-style: solid!important;
-    border-color: #eddcd5!important;
-    border-width: 1px!important;
+    border-style: solid !important;
+    border-color: #eddcd5 !important;
+    border-width: 1px !important;
 }
 
 nav .input-field {
@@ -204,32 +204,34 @@ main {
 
 }
 
-.sidenav-trigger{
-color: rgb(247, 142, 33);
+.sidenav-trigger {
+    color: rgb(247, 142, 33);
 }
 
-.post-title h3{
+.post-title h3 {
     text-align: center;
-    color:#89b4df;
+    color: #89b4df;
     font-size: 2rem;
 }
-.post-subtitle h4{
+
+.post-subtitle h4 {
     text-align: center;
-    color:black;
+    color: black;
     font-size: 1.5rem;
 
 }
-.post-content{
+
+.post-content {
     font-size: 1rem;
     margin-top: 30px;
 }
 
-.post-content img{
-    max-width: 100%!important;
-    height: auto!important;
+.post-content img {
+    max-width: 100% !important;
+    height: auto !important;
 }
 
-.post-content h1{
+.post-content h1 {
     display: block;
     font-size: 2em;
     margin-block-start: 0.67em;
@@ -239,7 +241,8 @@ color: rgb(247, 142, 33);
     font-weight: normal;
     line-height: 1.2;
 }
-.post-content h2{
+
+.post-content h2 {
     display: block;
     font-size: 1.5em;
     margin-block-start: 0.83em;
@@ -249,7 +252,8 @@ color: rgb(247, 142, 33);
     font-weight: normal;
     line-height: 1.2;
 }
-.post-content h3{
+
+.post-content h3 {
     display: block;
     font-size: 1.17em;
     margin-block-start: 1em;
@@ -259,7 +263,8 @@ color: rgb(247, 142, 33);
     font-weight: normal;
     line-height: 1.2;
 }
-.post-content h4{
+
+.post-content h4 {
     display: block;
     margin-block-start: 1.33em;
     margin-block-end: 1.33em;
@@ -268,7 +273,8 @@ color: rgb(247, 142, 33);
     font-weight: normal;
     line-height: 1.2;
 }
-.post-content h5{
+
+.post-content h5 {
     display: block;
     font-size: 0.83em;
     margin-block-start: 1.67em;
@@ -278,7 +284,8 @@ color: rgb(247, 142, 33);
     font-weight: normal;
     line-height: 1.2;
 }
-.post-content h6{
+
+.post-content h6 {
     display: block;
     font-size: 0.67em;
     margin-block-start: 2.33em;
@@ -288,7 +295,7 @@ color: rgb(247, 142, 33);
     font-weight: normal;
     line-height: 1.2;
 }
-.post-content strong{
+
+.post-content strong {
     font-weight: bold;
 }
-

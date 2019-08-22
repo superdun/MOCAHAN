@@ -26,14 +26,18 @@
     <div class="relative_contents">
         <ul>
             {% for rp in relativePosts %}
+            {% if rp %}
+            {% if rp.id == post.id%}
             <li>
                 <span class="content_icon"></span>
                 <span>
-                        <a class="relative_content" href="{{ url_for('web.post',lang='cn',id=rp.id,route=route) }}">{{rp.title}}</a>
+                    <a class="relative_content"
+                        href="{{ url_for('web.post',lang='cn',id=rp.id,route=route) }}">{{rp.title}}</a>
                 </span>
 
             </li>
-
+            {% endif %}
+            {% endif %}
             {% endfor %}
         </ul>
 

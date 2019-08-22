@@ -106,8 +106,8 @@
         <div class="home-pair-text-container">
             <p>你的材料能够使用摩擦焊接吗？</p>
             <p id="result"></p>
-            <div class="row">
-                <div class="col s5">
+            <div class="row" >
+                <div class="col s10 m5 s5 offset-s1">
                     <select id="m1">
                         <option value="" disabled selected></option>
                         {% for m in materials %}
@@ -115,7 +115,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col s5">
+                <div class="col s10 m5 s5 offset-s1">
                     <select id="m2">
                         <option value="" disabled selected></option>
                         {% for m in materials %}
@@ -124,7 +124,7 @@
                     </select>
 
                 </div>
-                <div class="col s2">
+                <div class="col s4 m2 s2 offset-s4">
                     <a class="waves-effect waves-light btn" id="pair">检索</a>
                 </div>
             </div>

@@ -10,6 +10,6 @@
     font-size: 25px;
 }
 .home-pair-text-container .row{
-    width: 450px;
+    max-width: 450px;
 }
 
