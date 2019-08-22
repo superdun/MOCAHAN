@@ -9,7 +9,9 @@
 
         {% for c in carousel %}
         <div class="carousel-item">
+            {% if c.img %}
             <img src="{{url_for('static',filename=c.img) }}">
+            {% endif %}
             <!-- <div class="carousel-text-container ie-carousel-text-container"> -->
                 <!-- <h2>{{c.title}}</h2>
                 <p class="white-text">{{c.content}}</p> -->
