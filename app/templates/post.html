@@ -27,7 +27,7 @@
         <ul>
             {% for rp in relativePosts %}
             {% if rp %}
-            {% if rp.id == post.id%}
+            {% if rp.id != post.id%}
             <li>
                 <span class="content_icon"></span>
                 <span>
