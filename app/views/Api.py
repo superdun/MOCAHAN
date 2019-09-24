@@ -48,7 +48,7 @@ def post():
         return jsonify({"status": "failed"})
     fb = Feedback(name=name, company_name=company_name, position=position,
                   address=address, phone=phone, email=email, target=target,
-                  contact=contact, comment=comment)
+                  contact=contact, comment=comment, created_at=datetime.now())
     db.session.add(fb)
     db.session.commit()
     msg = u"【锢维官网新消息】%s,%s,%s,%s,%s" % (
@@ -73,7 +73,7 @@ def PairAPI():
             .filter_by(pairtwoid=m2).first()
         r2 = Pair.query.filter_by(paironeid=m2) \
             .filter_by(pairtwoid=m1).first()
-    
+
         if r1 and r2:
             result = True
 
