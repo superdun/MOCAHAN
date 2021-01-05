@@ -56,6 +56,8 @@ class Home(db.Model):
 class Footer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(60000))
+    beian = db.Column(db.String(60000))
+    beianUrl = db.Column(db.String(60000))
 
     def __repr__(self):
         return self.id

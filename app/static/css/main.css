@@ -299,3 +299,8 @@ main {
 .post-content strong {
     font-weight: bold;
 }
+
+.beian {
+    color: black;
+    margin-left: 10px;
+}
