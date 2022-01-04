@@ -1,6 +1,9 @@
 /**
  * Created by lidad on 2018/10/9.
  */
+
+
+
 function onResize() {
     if($("body").width() < 900){
         $(".brand-logo").css("display", "none");

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block css %}
+{% block secondcss %}{% endblock %}
+{% endblock %}
+{% block content %}
+<div>
+    <div class="row second-content">
+        <div class="col s12 m10 l10 offset-m1 offset-l1">
+            {% block second %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

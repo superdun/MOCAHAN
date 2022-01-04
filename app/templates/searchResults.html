@@ -17,7 +17,7 @@
             <div class="col s12 card-owner">
                 <div class="card Large ">
                     {% if  p.Firststage.link %}
-                    <a href="{{ url_for('web.post',lang='cn',route = p.Firststage.link,id=p.id) }}">
+                    <a href="{{ url_for('web.post',lang='cn',id=p.id) }}">
                         {%else%}
                         <a href="{{ url_for('web.postDetail',lang='cn',id=p.id) }}"></a>
                         {% endif %}

@@ -1,24 +1,50 @@
-{% extends "banner.html" %}
+{% extends "noBanner.html" %}
 {% block secondcss %}
 <link rel="stylesheet" href="{{ url_for('static',filename='css/post.css') }}" type="text/css" />
+<script>
+    {% if post.nextpostid %}
+    window.onscroll = function(ev) {
+    if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+      // you're at the bottom of the page
+      window.location.href=" {{ url_for('web.post',lang='cn',id=post.nextpostid) }} ";
+    }
+    {% endif %}
+};
+</script>
 {% endblock %}
 {% block second %}
 <div>
-    <div class="post-title">
-        <h3>{{post.title}}</h3>
+    {% if post.typeid==2 %}
+        <div class="col s12">
+            {{  post.rightVideo | safe}}
+        </div>
+    {% else %}
+    <div class="col s6">
+        <div class="post-title">
+            <h3>{{post.title}}</h3>
+        </div>
+        {% if post.subtitle %}
+        <div class="post-subtitle">
+            <h4>{{post.subtitle}}</h4>
+        </div>
+        {% endif %}
+        <div class="post-content">
+            <p>
+                {{post.content | safe}}
+            </p>
+        </div>
     </div>
-    {% if post.subtitle %}
-    <div class="post-subtitle">
-        <h4>{{post.subtitle}}</h4>
+    <div class="col s6 ">
+        {% if post.rightImg %}
+        <img class="media-right" src="{{ url_for('static',filename=post.rightImg ) }}" />
+        {% elif post.rightVideo %}
+        {{  post.rightVideo | safe}}
+        {% endif %}
     </div>
     {% endif %}
-    <div class="post-content">
-        <p>
-            {{post.content | safe}}
-        </p>
-    </div>
 </div>
-<div class="relative">
+
+<!-- <div class="relative">
     <div class="relative_title row">
         <div class="col s6">相关文章</div>
         <div class="col s6 r"><a href="{{ url_for('web.second',lang='cn',route=route) }}">返回上级</a></div>
@@ -42,5 +68,5 @@
         </ul>
 
     </div>
-</div>
+</div> -->
 {% endblock %}

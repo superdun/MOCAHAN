@@ -128,6 +128,18 @@ class Thirdstage(db.Model):
         return str(self.id)
 
 
+class Posttype(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200))
+    posts = db.relationship('Post', backref='Posttype', lazy='dynamic')
+
+    def __repr__(self):
+        if self.name:
+            return str(self.id)+"--"+self.name.encode('utf8').decode('utf8')
+        else:
+            return str(self.id)
+
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.now())
@@ -140,8 +152,15 @@ class Post(db.Model):
     tagtwoid = db.Column(db.Integer, db.ForeignKey('secondstage.id'))
     tagthreeid = db.Column(db.Integer, db.ForeignKey('thirdstage.id'))
     status = db.Column(db.String(200), default="published")
-    link = db.Column(db.String(200))
-    subtitle = db.Column(db.String(200))
+    link = db.Column(db.String(500))
+    subtitle = db.Column(db.String(500))
+    rightImg = db.Column(db.String(500))
+    rightVideo = db.Column(db.String(500))
+    typeid = db.Column(db.Integer, db.ForeignKey('posttype.id'))
+    nextpostid = db.Column(db.Integer, db.ForeignKey('post.id'))
+    Nextpost = db.relationship('Post', backref='Post',  remote_side=[id])
+    firststage = db.relationship('Firststage',
+        backref=db.backref('Post', lazy='dynamic'))
 
     def __repr__(self):
         if(self.title):

@@ -1,10 +1,10 @@
 .post-title h3{
-    text-align: center;
+    text-align: left;
     color:#89b4df;
     font-size: 2rem;
 }
 .post-subtitle h4{
-    text-align: center;
+    text-align: left;
     color:black;
     font-size: 1.5rem;
 
@@ -101,4 +101,21 @@
     background-color: #1672a5;
     margin-right: 19px;
     vertical-align: 3px
+}
+
+.media-right{
+
+    position: fixed;
+    top: 300px;
+    max-width: 700px;
+}
+.s6>iframe{
+    position: fixed;
+    top: 300px;
+    min-width: 600px;
+    min-height: 500px;
+}
+.s12>iframe{
+    min-height: 800px;
+    width: 100%;
 }

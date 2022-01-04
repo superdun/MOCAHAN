@@ -127,9 +127,10 @@ class PostView(AdminModel):
         'content', 'img', 'Secondstage', 'Thirdstage', 'cover')
     form_excluded_columns = ('Secondstage', 'Thirdstage')
     form_columns = ('created_at', 'title', 'description', 'subtitle',
-                    'Firststage', 'status', 'cover', "link", 'content')
+                    'Firststage', 'status', 'cover', "link", 'content','rightImg','rightVideo','Posttype','Nextpost')
     column_labels = dict(created_at=u'创建时间', title=u'标题', description=u'描述', content=u'内容', subtitle=u'副标题',
-                         Firststage=u'一级分类', status=u'状态', cover=u'封面', img=u"图片", link=u"链接（首页）")
+                         Firststage=u'一级分类', status=u'状态', cover=u'封面', img=u"图片", link=u"链接（首页）"
+                         ,rightImg=u"右侧图片",rightVideo=u"右侧视频",Posttype=u"文章类型",Nextpost=u"下一篇文章")
     form_overrides = dict(content=CKEditorField)
     create_template = 'edit.html'
     edit_template = 'edit.html'
@@ -138,6 +139,8 @@ class PostView(AdminModel):
         return {
             'img': ImageUpload(u'图片', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
                                url_relative_path="/static/"),
+            'rightImg': ImageUpload(u'右侧图片', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
+                               url_relative_path="/static/"),                                                  
             'cover': ImageUpload(u'封面', base_path=getUploadUrl(), relative_path=thumb.relativePath(),
                                  url_relative_path="/static/"),
             'status': SelectField(u'状态', choices=(("deleted", u"已删除"), ("published", u"发布"),))

@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col s12 card-owner">
                 <div class="card Large ">
-                    <a href="{{ url_for('web.post',lang='cn',route = route,id=p.id) }}">
+                    <a href="{{ url_for('web.post',lang='cn',id=p.id) }}">
                         <div class="card-image">
                             {% if  p.cover %}
                             <img src="{{url_for('static',filename=p.cover) }}">
